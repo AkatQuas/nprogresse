@@ -1,0 +1,30 @@
+{
+  "name": "nprogresse",
+  "version": "0.2.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "rollup -c ./rollup.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AkatQuas/nprogresse.git"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "jest": "^24.8.0",
+    "jquery": "^3.4.1",
+    "jsdom": "^15.1.0",
+    "mocha": "^6.1.4",
+    "mocha-jsdom": "^2.0.0",
+    "rollup": "^1.12.0",
+    "rollup-copy-plugin": "^0.1.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-less": "^1.1.2",
+    "rollup-plugin-typescript2": "^0.21.0",
+    "rollup-plugin-uglify": "^6.0.2",
+    "typescript": "^3.4.5"
+  },
+  "license": "MIT"
+}
