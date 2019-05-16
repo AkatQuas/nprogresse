@@ -205,7 +205,7 @@ function barPositionCSS(positionUsing: string, n: number, speed: number, ease: s
 }
 
 class NProgress {
-  static version = '0.2.1';
+  static version = '0.2.2';
   settings = {
     minimum: 0.08,
     easing: 'linear',
@@ -260,7 +260,7 @@ class NProgress {
    */
   render(fromStart: boolean): HTMLElement {
     if (this.isRendered()) {
-      return document.getElementById('nprogress');
+      return this.el;
     }
     const { settings } = this;
     addClass(document.documentElement, 'nprogress-busy');
@@ -287,6 +287,7 @@ class NProgress {
     }
 
     parent.appendChild(progress);
+    this.el = progress;
     return progress;
   }
 
@@ -298,9 +299,9 @@ class NProgress {
     removeClass(document.documentElement, 'nprogress-busy');
     removeClass(document.querySelector(settings.parent), 'nprogress-custom-parent');
     const progress = this.el;
-    this.el = null;
-    this.status = null;
     progress && removeElement(progress);
+    this.status = null;
+    this.el = null;
   }
 
   /**
@@ -316,7 +317,6 @@ class NProgress {
     n = clamp(n, settings.minimum, 1);
     this.status = n;
     const progress = this.render(!started);
-    this.el = progress;
     progress.offsetWidth; /* Repaint */
 
     queue((next: Function) => {
