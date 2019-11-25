@@ -23,9 +23,9 @@ Add the files [js](./index.js) and [style](./style.css) to your project.
 This NProgresse is only available via npm in git protocal.
 
 ~~~ bash
-$ npm install --save git+https://github.com/AkatQuas/nprogresse
+$ npm install --save nprogresse
 # or
-$ yarn add git+https://github.com/AkatQuas/nprogresse
+$ yarn add nprogresse
 ~~~
 
 Basic usage
