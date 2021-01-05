@@ -1,10 +1,4 @@
 (function () {
-  if (typeof process === 'object') {
-    require('mocha-jsdom')({
-      url: 'http://locahost'
-    });
-  }
-
   var root = this;
   var assert = (root.chai || require('chai')).assert;
 
@@ -19,7 +13,7 @@
     });
 
     afterEach(function () {
-      $("#nprogress").remove();
+      $('#nprogress').remove();
       $('html').attr('class', '');
       NProgress.status = null;
 
@@ -30,10 +24,10 @@
     describe('.set()', function () {
       it('.set(0) must render', function (done) {
         NProgress.set(0);
-        assert.equal($("#nprogress").length, 1);
-        assert.equal($("#nprogress .bar").length, 1);
-        assert.equal($("#nprogress .peg").length, 1);
-        assert.equal($("#nprogress .spinner").length, 0);
+        assert.equal($('#nprogress').length, 1);
+        assert.equal($('#nprogress .bar').length, 1);
+        assert.equal($('#nprogress .peg').length, 1);
+        assert.equal($('#nprogress .spinner').length, 0);
 
         done();
       });
@@ -41,10 +35,10 @@
       it('.set(1) should appear and disappear', function (done) {
         NProgress.configure({ speed: 10 });
         NProgress.set(0).set(1);
-        assert.equal($("#nprogress").length, 1);
+        assert.equal($('#nprogress').length, 1);
 
         setTimeout(function () {
-          assert.equal($("#nprogress").length, 0);
+          assert.equal($('#nprogress').length, 0);
           done();
         }, 70);
       });
@@ -70,8 +64,8 @@
     describe('.start()', function () {
       it('must render', function (done) {
         NProgress.start();
-        assert.equal($("#nprogress").length, 1);
-        assert.equal(NProgress.el, $("#nprogress")[0]);
+        assert.equal($('#nprogress').length, 1);
+        assert.equal(NProgress.el, $('#nprogress')[0]);
         done();
       });
 
@@ -84,8 +78,10 @@
         var test = $('<div>', { id: 'test' }).appendTo('body');
         NProgress.configure({ parent: '#test' });
         NProgress.start();
-        assert.isTrue($("#nprogress").parent().is(test));
-        assert.isTrue($(NProgress.settings.parent).hasClass("nprogress-custom-parent"));
+        assert.isTrue($('#nprogress').parent().is(test));
+        assert.isTrue(
+          $(NProgress.settings.parent).hasClass('nprogress-custom-parent')
+        );
       });
     });
 
@@ -94,13 +90,13 @@
     describe('.done()', function () {
       it('must not render without start', function (done) {
         NProgress.done();
-        assert.equal($("#nprogress").length, 0);
+        assert.equal($('#nprogress').length, 0);
         done();
       });
 
       it('.done(true) must render', function (done) {
         NProgress.done(true);
-        assert.equal($("#nprogress").length, 1);
+        assert.equal($('#nprogress').length, 1);
         done();
       });
     });
@@ -108,17 +104,17 @@
     describe('.error()', function () {
       it('must not render without start', function (done) {
         NProgress.error();
-        assert.equal($("#nprogress").length, 0);
+        assert.equal($('#nprogress').length, 0);
         done();
       });
 
       it('.error(true) must render', function (done) {
         NProgress.error(true);
-        assert.equal($("#nprogress").length, 1);
+        assert.equal($('#nprogress').length, 1);
         assert.isTrue($(NProgress.el).hasClass('error'));
         done();
       });
-    })
+    });
     // ----
 
     describe('.remove()', function () {
@@ -139,7 +135,7 @@
     describe('.inc()', function () {
       it('should render', function () {
         NProgress.inc();
-        assert.equal($("#nprogress").length, 1);
+        assert.equal($('#nprogress').length, 1);
       });
 
       it('should start with minimum', function () {
@@ -156,7 +152,9 @@
       });
 
       it('should never reach 1.0', function () {
-        for (var i = 0; i < 100; ++i) { NProgress.inc(); }
+        for (var i = 0; i < 100; ++i) {
+          NProgress.inc();
+        }
         assert.operator(NProgress.status, '<', 1.0);
       });
     });
@@ -176,7 +174,7 @@
       it('should not render spinner by default', function () {
         NProgress.start();
 
-        assert.equal($("#nprogress .spinner").length, 0);
+        assert.equal($('#nprogress .spinner').length, 0);
       });
 
       it('should be true by default', function () {
@@ -187,9 +185,8 @@
         NProgress.configure({ showSpinner: true });
         NProgress.start();
 
-        assert.equal($("#nprogress .spinner").length, 1);
+        assert.equal($('#nprogress .spinner').length, 1);
       });
     });
   });
-
 })();
