@@ -3,6 +3,7 @@
   "version": "0.2.4",
   "main": "index.js",
   "scripts": {
+    "prepublishOnly": "rollup -c ./rollup.config.js",
     "test": "rollup -c ./rollup.config.js && mocha -r jsdom-global/register",
     "build": "rollup -c ./rollup.config.js"
   },
