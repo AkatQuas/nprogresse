@@ -5,8 +5,10 @@ name: Publish_to_NPM
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  release:
-    types: [ published ]
+  push:
+    # Pattern matched against refs/tags
+    tags:        
+      - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
 
 
   # Allows you to run this workflow manually from the Actions tab
