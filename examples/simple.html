@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple NprogressE</title>
+    <style>
+      html {
+        font-size: 16px;
+      }
+      .container {
+        width: 800px;
+        margin: 0 auto;
+      }
+      .card {
+        padding: 0.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #888;
+        border-radius: 4px;
+      }
+      .card .title {
+        font-weight: bold;
+        padding: 0.5rem 0;
+        font-size: 1.5rem;
+      }
+      .card .bar {
+        padding: 0.25rem 0;
+      }
+      .card .actions {
+        padding: 0.5rem 0;
+      }
+      .card .actions button {
+        padding: 0.25rem 0.5rem;
+        margin-right: 0.25rem;
+      }
+    </style>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../index.js"></script>
+    <script>
+      // hacking here
+      window.NProgressEConstructor = NProgressE.__proto__.constructor;
+      /**
+       * @param {HTMLElement} el
+       * @param {EventListenerOrEventListenerObject} callback
+       */
+      function onClick(el, callback) {
+        el.addEventListener('click', callback);
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card" id="done">
+        <div class="title">Usage: <code>nprogresse.done()</code></div>
+        <div class="bar"></div>
+      </div>
+      <script>
+        {
+          const done = new NProgressEConstructor();
+          done.configure({
+            parent: '#done .bar',
+          });
+          function once() {
+            done.start();
+            setTimeout(() => {
+              done.done();
+            }, 3000);
+          }
+          setInterval(once, 5000);
+          once();
+        }
+      </script>
+      <div class="card" id="error">
+        <div class="title">Usage: <code>nprogresse.error()</code></div>
+        <div class="bar"></div>
+      </div>
+      <script>
+        {
+          const error = new NProgressEConstructor();
+          error.configure({
+            parent: '#error .bar',
+          });
+          function once() {
+            error.start();
+            setTimeout(() => {
+              error.error();
+            }, 2000);
+          }
+          setInterval(once, 4000);
+          once();
+        }
+      </script>
+      <div class="card" id="interactive">
+        <div class="title">Interactive</div>
+        <div class="bar"></div>
+        <div class="actions">
+          <button action="start">Start()</button>
+          <button action="restart">Restart()</button>
+          <button action="done">Done()</button>
+          <button action="error">Error()</button>
+        </div>
+      </div>
+      <script>
+        {
+          const interactive = new NProgressEConstructor();
+          interactive.configure({
+            parent: '#interactive .bar',
+          });
+          const startButton = document.querySelector(
+            '#interactive .actions [action="start"]'
+          );
+          onClick(startButton, () => {
+            interactive.start();
+          });
+          const restartButton = document.querySelector(
+            '#interactive .actions [action="restart"]'
+          );
+          onClick(restartButton, () => {
+            interactive.set(0);
+          });
+          const doneButton = document.querySelector(
+            '#interactive .actions [action="done"]'
+          );
+          onClick(doneButton, () => {
+            interactive.done();
+          });
+          const errorButton = document.querySelector(
+            '#interactive .actions [action="error"]'
+          );
+          onClick(errorButton, () => {
+            interactive.error();
+          });
+        }
+      </script>
+    </div>
+  </body>
+</html>
