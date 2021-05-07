@@ -39,9 +39,13 @@ $ npm install --save nprogresse
 
 ## Examples
 
-Here is an [example code](./examples/simple.html) for usages.
+Here is an [example code](./examples/basic.html) for basic usage.
 
-![example usage](./screenshot.gif)
+![basic usage](./screenshot1.gif)
+
+Here is an [example code](./examples/simple.html) for simple usage.
+
+![simple example usage](./screenshot2.gif)
 
 ## Basic usage
 

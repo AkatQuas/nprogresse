@@ -39,14 +39,7 @@
     <script src="../index.js"></script>
     <script>
       // hacking here
-      window.NProgressEConstructor = NProgressE.__proto__.constructor;
-      /**
-       * @param {HTMLElement} el
-       * @param {EventListenerOrEventListenerObject} callback
-       */
-      function onClick(el, callback) {
-        el.addEventListener('click', callback);
-      }
+      window.NProgressEConstructor = window.NProgressE.__proto__.constructor;
     </script>
   </head>
 
@@ -100,36 +93,33 @@
           <button action="restart">Restart()</button>
           <button action="done">Done()</button>
           <button action="error">Error()</button>
+          <button action="spin" disabled>
+            spinner in not avaliable in custom parent element
+          </button>
         </div>
       </div>
       <script>
         {
+          function registerCallback(action, callback) {
+            const el = document.querySelector(
+              `#interactive .actions [action="${action}"]`
+            );
+            el.addEventListener('click', callback);
+          }
           const interactive = new NProgressEConstructor();
           interactive.configure({
             parent: '#interactive .bar',
           });
-          const startButton = document.querySelector(
-            '#interactive .actions [action="start"]'
-          );
-          onClick(startButton, () => {
+          registerCallback('start', () => {
             interactive.start();
           });
-          const restartButton = document.querySelector(
-            '#interactive .actions [action="restart"]'
-          );
-          onClick(restartButton, () => {
+          registerCallback('restart', () => {
             interactive.set(0);
           });
-          const doneButton = document.querySelector(
-            '#interactive .actions [action="done"]'
-          );
-          onClick(doneButton, () => {
+          registerCallback('done', () => {
             interactive.done();
           });
-          const errorButton = document.querySelector(
-            '#interactive .actions [action="error"]'
-          );
-          onClick(errorButton, () => {
+          registerCallback('error', () => {
             interactive.error();
           });
         }

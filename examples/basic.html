@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic NprogressE</title>
+    <style>
+      html {
+        font-size: 16px;
+      }
+    </style>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../index.js"></script>
+  </head>
+
+  <body>
+    <div style="position: fixed; top: 30px; right: 40px">
+      spinner is here <span>↗</span>
+    </div>
+    <div style="text-align: center">
+      progress bar is running<span>↑↑↑</span>
+    </div>
+    <script>
+      {
+        window.NProgressE.configure({
+          showSpinner: true,
+        });
+        function once() {
+          window.NProgressE.start();
+          setTimeout(() => {
+            if (Math.random() > 0.6) {
+              window.NProgressE.done();
+            } else {
+              window.NProgressE.error();
+            }
+          }, 3000);
+        }
+        setInterval(once, 5000);
+        once();
+      }
+    </script>
+  </body>
+</html>
