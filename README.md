@@ -9,22 +9,55 @@ The last letter `e` is used for package name distinction, while the usages are a
 Slim progress bars for Ajax'y applications. Inspired by Google, YouTube, and
 Medium.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+**Table of Contents**
+
+- [Installation](#installation)
+- [Examples](#examples)
+- [Basic usage](#basic-usage)
+- [Ideas](#ideas)
+- [Advanced usage](#advanced-usage)
+- [Configuration](#configuration)
+  - [`minimum`](#minimum)
+  - [`template`](#template)
+  - [`easing` and `speed`](#easing-and-speed)
+  - [`trickle`](#trickle)
+  - [`trickleSpeed`](#tricklespeed)
+  - [`showSpinner`](#showspinner)
+  - [`parent`](#parent)
+- [Customization](#customization)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Installation
-
-Add the files [js](./index.js) and [style](./style.css) to your project.
-
-```html
-<script src="nprogresse/index.js"></script>
-<link rel="stylesheet" href="nprogresse/style.css" />
-```
 
 ```bash
 $ npm install --save nprogresse
-# or
-$ yarn add nprogresse
 ```
 
+## Examples
+
+Here is an [example code](./examples/simple.html) for usages.
+
+![example usage](./screenshot.gif)
+
 ## Basic usage
+
+```html
+<!-- in standalone html -->
+<script src="nprogresse/index.js"></script>
+<link rel="stylesheet" href="nprogresse/style.css" />
+<script>
+  window.NProgressE.start();
+
+  // time elapsed
+  window.NProgressE.done();
+  // or
+  window.NProgressE.error();
+</script>
+```
 
 Simply call `start()`, `done()` and `error()` to control the progress bar.
 
@@ -66,17 +99,19 @@ $(document).on('ajax:end', function () {
 
 ## Advanced usage
 
-**Percentages:** To set a progress percentage, call `.set(n)`, where _n_ is a
-number between `0..1`.
+**Percentages**
+
+To set a progress percentage, call `.set(n)`, where _n_ is a number between `0..1`.
 
 ```js
-NProgressE.set(0.0); // Sorta same as .start()
+NProgressE.set(0.0); // same as .start()
 NProgressE.set(0.4);
-NProgressE.set(1.0); // Sorta same as .done()
+NProgressE.set(1.0); // same as .done()
 ```
 
-**Incrementing:** To increment the progress bar, just use `.inc()`. This
-increments it with a random amount. This will never get to 100%: use it for
+**Incrementing**
+
+To increment the progress bar, just use `.inc()`. This increments it with a random amount. This will never get to 100%: use it for
 every image load (or similar).
 
 ```js
@@ -89,28 +124,34 @@ If you want to increment by a specific value, you can pass that as a parameter:
 NProgressE.inc(0.2); // This will get the current status value and adds 0.2 until status is 0.994
 ```
 
-**Force-done:** By passing `true` to `done()`, it will show the progress bar
-even if it's not being shown. (The default behavior is that _.done()_ will not
-do anything if _.start()_ isn't called)
+**Force-done**
+
+By passing `true` to `done()`, it will show the progress bar even if it's not being shown. (The default behavior is that `.done()` will not
+do anything if `.start()` isn't called)
 
 ```js
 NProgressE.done(true);
 ```
 
-**Force-error:** By passing `true` to `error()`, it will show the progress bar
-even if it's not being shown.
+**Force-error**
+
+By passing `true` to `error()`, it will show the progress bar even if it's not being shown.
 
 ```js
 NProgressE.error(true);
 ```
 
-**Get the status value:** To get the status value, use `.status`
+**Get the status value**
+
+To get the status value, use `.status`.
 
 ```js
 console.log(NProgressE.status);
 ```
 
-**Get the progress element:** To get the element, use `.el`;
+**Get the progress element**
+
+To get the element, use `.el`;
 
 ```js
 console.log(NProgressE.el);
@@ -118,19 +159,18 @@ console.log(NProgressE.el);
 
 ## Configuration
 
-#### `minimum`
+### `minimum`
 
-Changes the minimum percentage used upon starting. (default: `0.08`)
+Changes the minimum percentage used upon starting, (default: `0.08`).
 
 ```js
 NProgressE.configure({ minimum: 0.1 });
 ```
 
-#### `template`
+### `template`
 
 You can change the markup using `template`. To keep the progress
-bar working, keep an element with `role='bar'` in there. See the [default template]
-for reference.
+bar working, keep an element with `role='bar'` in there. See the [default template](./src/index.ts#L238) for reference.
 
 ```js
 NProgressE.configure({
@@ -138,16 +178,15 @@ NProgressE.configure({
 });
 ```
 
-#### `easing` and `speed`
+### `easing` and `speed`
 
-Adjust animation settings using _easing_ (a CSS easing string)
-and _speed_ (in ms). (default: `ease` and `200`)
+Adjust animation settings using _easing_ (a CSS easing string) and _speed_ (in ms), (default: `ease` and `200`).
 
 ```js
 NProgressE.configure({ easing: 'ease', speed: 500 });
 ```
 
-#### `trickle`
+### `trickle`
 
 Turn off the automatic incrementing behavior by setting this to `false`. (default: `true`)
 
@@ -155,7 +194,7 @@ Turn off the automatic incrementing behavior by setting this to `false`. (defaul
 NProgressE.configure({ trickle: false });
 ```
 
-#### `trickleSpeed`
+### `trickleSpeed`
 
 Adjust how often to trickle/increment, in ms.
 
@@ -163,17 +202,17 @@ Adjust how often to trickle/increment, in ms.
 NProgressE.configure({ trickleSpeed: 200 });
 ```
 
-#### `showSpinner`
+### `showSpinner`
 
-Turn on loading spinner by setting it to true. (default: `false`)
+Turn on loading spinner by setting it to true, (default: `false`).
 
 ```js
 NProgressE.configure({ showSpinner: true });
 ```
 
-#### `parent`
+### `parent`
 
-specify this to change the parent container. (default: `body`)
+Specify this to change the parent container, (default: `body`).
 
 ```js
 NProgressE.configure({ parent: '#container' });
@@ -183,7 +222,8 @@ NProgressE.configure({ parent: '#container' });
 
 Modify the built [style.css](./style.css) to your liking.
 
+The included CSS file is pretty minimal.
+
 > Tip: you probably only want to find source less file [here](./src/style.less).
 
-The included CSS file is pretty minimal... in fact, feel free to scrap it and
-make your own!
+In fact, feel free to scrap it and make your own style!

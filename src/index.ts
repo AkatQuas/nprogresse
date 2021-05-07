@@ -270,7 +270,11 @@ class NProgressE {
    * Check if the progress rendered in DOM
    */
   isRendered(): boolean {
-    return !!document.querySelector('#nprogresse');
+    const parent = document.querySelector(this.settings.parent);
+    if (!parent) {
+      return false;
+    }
+    return !!parent.querySelector('#nprogresse');
   }
 
   /**

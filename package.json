@@ -1,7 +1,12 @@
 {
   "name": "nprogresse",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "main": "index.js",
+  "keywords": [
+    "nprogress",
+    "nprogresse",
+    "progress bar"
+  ],
   "scripts": {
     "prepublishOnly": "rollup -c ./rollup.config.js",
     "test": "rollup -c ./rollup.config.js && mocha -r jsdom-global/register",
