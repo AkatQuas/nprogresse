@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "./",
     "module": "ESNext",
     "declaration": true,
     "noImplicitAny": false,
@@ -7,7 +8,6 @@
     "preserveConstEnums": true,
     "sourceMap": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
