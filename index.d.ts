@@ -8,7 +8,7 @@ export interface configureOptions {
     parent?: string;
     template?: string;
 }
-declare class NProgress {
+declare class NProgressE {
     static version: string;
     settings: {
         minimum: number;
@@ -25,16 +25,16 @@ declare class NProgress {
     };
     status: number;
     el: HTMLElement;
-    configure(options: configureOptions): NProgress;
+    configure(options: configureOptions): NProgressE;
     isStarted(): boolean;
     isRendered(): boolean;
     render(fromStart: boolean): HTMLElement;
     remove(): void;
-    set(n: number): NProgress;
-    start(): NProgress;
-    done(force: boolean): NProgress;
-    error(force: boolean): NProgress;
-    inc(amount?: number): NProgress;
+    set(n: number): NProgressE;
+    start(): NProgressE;
+    done(force: boolean): NProgressE;
+    error(force: boolean): NProgressE;
+    inc(amount?: number): NProgressE;
 }
-declare const _default: NProgress;
+declare const _default: NProgressE;
 export default _default;
