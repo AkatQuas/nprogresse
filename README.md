@@ -1,13 +1,12 @@
-# NProgressE
+# NProgressE ![Monthly downloads](https://img.shields.io/npm/dm/nprogresse.svg) ![Yearly downloads](https://img.shields.io/npm/dy/nprogresse.svg)
+
+> Minimalist progress bar
+
+[![NPM](https://nodei.co/npm/nprogresse.png)](https://www.npmjs.com/package/nprogresse)
 
 See the original [nprogress](https://github.com/rstacruz/nprogress) written by rstacruz, without whom this project wouldn't exist.
 
 The last letter `e` is used for package name distinction, while the usages are almost the same, see the following.
-
-> Minimalist progress bar
-
-Slim progress bars for Ajax'y applications. Inspired by Google, YouTube, and
-Medium.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
