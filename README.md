@@ -1,232 +1,107 @@
-# NProgressE ![Monthly downloads](https://img.shields.io/npm/dm/nprogresse.svg) ![Yearly downloads](https://img.shields.io/npm/dy/nprogresse.svg)
+# NProgressE
 
-> Minimalist progress bar
+[![npm version](https://img.shields.io/npm/v/nprogresse.svg)](https://www.npmjs.com/package/nprogresse)
+[![npm downloads](https://img.shields.io/npm/dm/nprogresse.svg)](https://www.npmjs.com/package/nprogresse)
+[![license](https://img.shields.io/npm/l/nprogresse.svg)](https://github.com/AkatQuas/nprogresse/blob/master/LICENSE)
 
-[![NPM](https://nodei.co/npm/nprogresse.png)](https://www.npmjs.com/package/nprogresse)
+Minimalist top loading progress bar for modern browsers.
 
-See the original [nprogress](https://github.com/rstacruz/nprogress) written by rstacruz, without whom this project wouldn't exist.
+Inspired by [nprogress](https://github.com/rstacruz/nprogress) by rstacruz. The trailing `e` distinguishes the package name; the API is largely the same.
 
-The last letter `e` is used for package name distinction, while the usages are almost the same, see the following.
+## Browser support
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+v1.0 targets evergreen browsers only (Chrome, Firefox, Safari, Edge — last two major versions). IE11 and legacy vendor-prefix fallbacks are not supported.
 
-**Table of Contents**
-
-- [Installation](#installation)
-- [Examples](#examples)
-- [Basic usage](#basic-usage)
-- [Ideas](#ideas)
-- [Advanced usage](#advanced-usage)
-- [Configuration](#configuration)
-  - [`minimum`](#minimum)
-  - [`template`](#template)
-  - [`easing` and `speed`](#easing-and-speed)
-  - [`trickle`](#trickle)
-  - [`trickleSpeed`](#tricklespeed)
-  - [`showSpinner`](#showspinner)
-  - [`parent`](#parent)
-- [Customization](#customization)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+See [CHANGELOG](./CHANGELOG.md) for breaking changes from 0.x.
 
 ## Installation
 
 ```bash
-$ npm install --save nprogresse
+npm install nprogresse
 ```
 
-## Examples
+## Usage
 
-Here is an [example code](./examples/basic.html) for basic usage.
-
-![basic usage](./screenshot1.gif)
-
-Here is an [example code](./examples/simple.html) for simple usage.
-
-![simple example usage](./screenshot2.gif)
-
-## Basic usage
-
-```html
-<!-- in standalone html -->
-<script src="nprogresse/index.js"></script>
-<link rel="stylesheet" href="nprogresse/style.css" />
-<script>
-  window.NProgressE.start();
-
-  // time elapsed
-  window.NProgressE.done();
-  // or
-  window.NProgressE.error();
-</script>
-```
-
-Simply call `start()`, `done()` and `error()` to control the progress bar.
+### ES modules
 
 ```js
 import NProgressE from 'nprogresse';
 import 'nprogresse/style.css';
-// start the progress
+
 NProgressE.start();
-
-// finish the progress in good status
-NProgressE.done();
-
-// finish the progress in error status
-NProgressE.error();
+NProgressE.done();   // success
+NProgressE.error();  // error state
 ```
 
-```js
-$(document).on('ajax:start', function () {
+### Script tag (UMD)
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/nprogresse/dist/style.css" />
+<script src="https://unpkg.com/nprogresse/dist/index.js"></script>
+<script>
   NProgressE.start();
-});
-$(document).on('ajax:end', function () {
-  if ('ajax:success') {
-    NProgressE.done();
-  } else {
-    NProgressE.error();
-  }
-});
+  NProgressE.done();
+</script>
 ```
 
-## Ideas
+## API
 
-- Add progress to your Ajax calls! Bind it to the jQuery `ajaxStart` and `ajaxStop` events.
+| Method | Description |
+| --- | --- |
+| `start()` | Show the bar and begin trickling |
+| `done(force?)` | Complete successfully and hide |
+| `error(force?)` | Complete with error styling and hide |
+| `set(n)` | Set progress to `n` (0–1) |
+| `inc(amount?)` | Increment progress |
+| `configure(options)` | Update settings |
+| `remove()` | Remove the bar from the DOM |
 
-  - `done()` for `ajaxSuccesss`.
+Read-only properties: `status`, `el`, `settings`.
 
-  - `error()` for `ajaxError`.
-
-- Make a fancy loading bar even without Turbolinks/Pjax! Bind it to `$(document).ready` and `$(window).load`.
-
-## Advanced usage
-
-**Percentages**
-
-To set a progress percentage, call `.set(n)`, where _n_ is a number between `0..1`.
-
-```js
-NProgressE.set(0.0); // same as .start()
-NProgressE.set(0.4);
-NProgressE.set(1.0); // same as .done()
-```
-
-**Incrementing**
-
-To increment the progress bar, just use `.inc()`. This increments it with a random amount. This will never get to 100%: use it for
-every image load (or similar).
-
-```js
-NProgressE.inc();
-```
-
-If you want to increment by a specific value, you can pass that as a parameter:
-
-```js
-NProgressE.inc(0.2); // This will get the current status value and adds 0.2 until status is 0.994
-```
-
-**Force-done**
-
-By passing `true` to `done()`, it will show the progress bar even if it's not being shown. (The default behavior is that `.done()` will not
-do anything if `.start()` isn't called)
-
-```js
-NProgressE.done(true);
-```
-
-**Force-error**
-
-By passing `true` to `error()`, it will show the progress bar even if it's not being shown.
-
-```js
-NProgressE.error(true);
-```
-
-**Get the status value**
-
-To get the status value, use `.status`.
-
-```js
-console.log(NProgressE.status);
-```
-
-**Get the progress element**
-
-To get the element, use `.el`;
-
-```js
-console.log(NProgressE.el);
-```
-
-## Configuration
-
-### `minimum`
-
-Changes the minimum percentage used upon starting, (default: `0.08`).
-
-```js
-NProgressE.configure({ minimum: 0.1 });
-```
-
-### `template`
-
-You can change the markup using `template`. To keep the progress
-bar working, keep an element with `role='bar'` in there. See the [default template](./src/index.ts#L238) for reference.
+### Configuration
 
 ```js
 NProgressE.configure({
-  template: "<div class='....'>...</div>",
+  minimum: 0.08,        // initial progress (default: 0.08)
+  easing: 'linear',     // CSS easing (default: 'linear')
+  speed: 200,           // animation duration in ms (default: 200)
+  trickle: true,        // auto-increment while active (default: true)
+  trickleSpeed: 200,    // trickle interval in ms (default: 200)
+  showSpinner: false,   // show corner spinner (default: false)
+  parent: 'body',       // container selector (default: 'body')
+  template: '...',      // custom HTML; keep `[role="bar"]`
 });
 ```
 
-### `easing` and `speed`
+### Force show on done/error
 
-Adjust animation settings using _easing_ (a CSS easing string) and _speed_ (in ms), (default: `ease` and `200`).
-
-```js
-NProgressE.configure({ easing: 'ease', speed: 500 });
-```
-
-### `trickle`
-
-Turn off the automatic incrementing behavior by setting this to `false`. (default: `true`)
+`done()` and `error()` are no-ops unless the bar was started. Pass `true` to force:
 
 ```js
-NProgressE.configure({ trickle: false });
-```
-
-### `trickleSpeed`
-
-Adjust how often to trickle/increment, in ms.
-
-```js
-NProgressE.configure({ trickleSpeed: 200 });
-```
-
-### `showSpinner`
-
-Turn on loading spinner by setting it to true, (default: `false`).
-
-```js
-NProgressE.configure({ showSpinner: true });
-```
-
-### `parent`
-
-Specify this to change the parent container, (default: `body`).
-
-```js
-NProgressE.configure({ parent: '#container' });
+NProgressE.done(true);
+NProgressE.error(true);
 ```
 
 ## Customization
 
-Modify the built [style.css](./style.css) to your liking.
+Override styles via [src/style.less](./src/style.less) or the built [dist/style.css](./dist/style.css).
 
-The included CSS file is pretty minimal.
+The default template requires an element with `role="bar"`. See the [default template](./src/index.ts#L75).
 
-> Tip: you probably only want to find source less file [here](./src/style.less).
+## Development
 
-In fact, feel free to scrap it and make your own style!
+```bash
+npm install
+npm test          # run tests
+npm run build     # build dist/
+npm run examples  # build + serve examples at http://localhost:5173
+```
+
+Examples:
+
+- [examples/basic.html](./examples/basic.html)
+- [examples/simple.html](./examples/simple.html)
+
+## License
+
+[MIT](./LICENSE)

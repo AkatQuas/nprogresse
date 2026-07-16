@@ -1,35 +1,67 @@
 {
   "name": "nprogresse",
-  "version": "0.2.6",
-  "main": "index.js",
-  "keywords": [
-    "nprogress",
-    "nprogresse",
-    "progress bar"
-  ],
-  "scripts": {
-    "prepublishOnly": "rollup -c ./rollup.config.js",
-    "test": "rollup -c ./rollup.config.js && mocha -r jsdom-global/register",
-    "build": "rollup -c ./rollup.config.js"
+  "version": "1.0.0",
+  "description": "Minimalist top loading progress bar for modern browsers",
+  "type": "module",
+  "author": "AkatQuas <295140755@qq.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/AkatQuas/nprogresse#readme",
+  "bugs": {
+    "url": "https://github.com/AkatQuas/nprogresse/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AkatQuas/nprogresse.git"
+    "url": "git+https://github.com/AkatQuas/nprogresse.git"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "unpkg": "dist/index.js",
+  "style": "dist/style.css",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "nprogress",
+    "nprogresse",
+    "progress",
+    "progress-bar",
+    "loading",
+    "loading-bar"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "serve": "vite --config vite.examples.config.ts",
+    "examples": "npm run build && npm run serve",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
   },
   "devDependencies": {
-    "@rollup/plugin-babel": "~5.3.0",
-    "@rollup/plugin-commonjs": "~18.1.0",
-    "@rollup/plugin-typescript": "~8.2.1",
-    "chai": "^4.3.4",
-    "jquery": "~3.6.0",
-    "jsdom": "~16.5.3",
-    "jsdom-global": "~3.0.2",
-    "mocha": "^8.3.2",
-    "rollup": "^2.47.0",
-    "rollup-plugin-less": "~1.1.3",
-    "rollup-plugin-uglify": "^6.0.4",
-    "tslib": "~2.2.0",
-    "typescript": "^4.2.4"
-  },
-  "license": "MIT"
+    "@types/node": "^26.1.1",
+    "chai": "^5.2.0",
+    "happy-dom": "^17.4.4",
+    "jquery": "^3.7.1",
+    "less": "^4.3.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.1.3"
+  }
 }

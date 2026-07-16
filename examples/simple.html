@@ -34,9 +34,30 @@
         padding: 0.25rem 0.5rem;
         margin-right: 0.25rem;
       }
+      .example-nav {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 1.5rem;
+        font-size: 14px;
+      }
+      .example-nav a {
+        color: #333;
+        text-decoration: none;
+        padding: 4px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fff;
+      }
+      .example-nav a:hover {
+        border-color: #888;
+      }
+      .example-nav a.active {
+        font-weight: bold;
+        border-color: #333;
+      }
     </style>
-    <link rel="stylesheet" href="../style.css" />
-    <script src="../index.js"></script>
+    <link rel="stylesheet" href="../dist/style.css" />
+    <script src="../dist/index.js"></script>
     <script>
       // hacking here
       window.NProgressEConstructor = window.NProgressE.__proto__.constructor;
@@ -45,6 +66,10 @@
 
   <body>
     <div class="container">
+      <nav class="example-nav">
+        <a href="./basic.html">Basic</a>
+        <a href="./simple.html" class="active">Simple</a>
+      </nav>
       <div class="card" id="done">
         <div class="title">Usage: <code>nprogresse.done()</code></div>
         <div class="bar"></div>
